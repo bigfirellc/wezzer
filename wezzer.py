@@ -3,8 +3,7 @@
 """
 wezzer.py
 it's wezzer, for weather
-
-Currently only compatible with Python 2.7
+github.com/nqnzp/wezzer
 """
 
 from __future__ import print_function
@@ -22,7 +21,7 @@ import textwrap
 
 
 # A handful of really short function definitions
-# All of them return
+# All of them return... things
 
 def get_localhost_ip():
     myip = ipgetter.myip()
@@ -100,7 +99,7 @@ def main():
     A wiser man probably would have made
     a bunch of this garbage object-oriented, but
     I'm not in it for the wisdom.
-    I'm in it for the money.
+    I'm only in it for the money.
     """
 
     # The most important variable declaration
@@ -123,7 +122,7 @@ def main():
     d = datetime.datetime.now()
     nowtime = d.strftime("%Y-%m-%d %I:%M %p")
 
-    # If the user provides a zip code, look up the lat/long for 
+    # If the user provides a zip code, look up the lat/long for
     # that, otherwise use their IP address
     if zip_code:
         geopy = get_geopy(zip_code)
@@ -137,11 +136,11 @@ def main():
         geoip = get_geoip(ip_addr)
         location = geoip.location
 
-        # Convert the geoip tuple to a string to use it 
+        # Convert the geoip tuple to a string to use it
         # in the API request
         latlong_str = str(location[0]) + "," + str(location[1])
 
-    # Send API request to weather.gov to get the 
+    # Send API request to weather.gov to get the
     # endpoint location data
     epdata = get_endpoint_data(latlong_str)
 
@@ -149,7 +148,7 @@ def main():
     forecast_url = epdata["properties"]["forecast"]
     hourly_url = epdata["properties"]["forecastHourly"]
 
-    # Use the forecast and hourly forecast URLs to get 
+    # Use the forecast and hourly forecast URLs to get
     # forecast and hourly data
     forecast_data = get_forecast_data(forecast_url)
     hourly_data = get_forecast_data(hourly_url)
@@ -171,11 +170,11 @@ def main():
     print(": Weather for %s, %s (%s)" % (city, state, nowtime))
     print("\n" + hourly_default_str + "-hour forecast")
 
-    # Iterate through the hourly JSON, print 
+    # Iterate through the hourly JSON, print
     # the time, temp, and forecast
 
     for period in hourly_data["properties"]["periods"]:
-        # Limit the output to what was set on 
+        # Limit the output to what was set on
         # command line or default
         if period["number"] > hourly_default:
             break
@@ -227,7 +226,7 @@ def main():
     else:
         print("\n" + str(results.num_days) + "-Day Extended Forecast")
 
-    # Iterate through the forecast JSON and print 
+    # Iterate through the forecast JSON and print
     # the name and forecast
     for period in forecast_data["properties"]["periods"]:
         if period["number"] > extended_default:
