@@ -157,7 +157,7 @@ def main():
     city = epdata["properties"]["relativeLocation"]["properties"]["city"]
     state = epdata["properties"]["relativeLocation"]["properties"]["state"]
 
-    # Setup variable for tempeerature trend monitoring
+    # Setup variable for temperature trend monitoring
     last_temp = 0
 
     # The color handling logic is not the greatest
