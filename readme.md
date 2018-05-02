@@ -46,10 +46,16 @@ cd ~/GitHub/wezzer/
 pip install -r requirements.txt
 ```
 
-Finally, depending upon your environment, you may need to make wezzer.py executable before you run it.
+Depending upon your environment, you may need to make wezzer.py executable before you run it.
 
 ```
 chmod u+x ./wezzer.py
+```
+
+And if you're really ambitious, you can copy Wezzer to a directory in your path, and rename it to remove the .py extension so you can run it from anywhere in your terminal:
+
+```
+sudo cp ./wezzer.py /usr/local/bin/wezzer
 ```
 
 ## Running Wezzer
@@ -57,7 +63,7 @@ chmod u+x ./wezzer.py
 Wezzer is easy to run once you've got it installed:
 
 ```bash
-./wezzer.py
+wezzer
 ```
 
 Wezzer will geolocate your computer by looking up your IP address, using [ipgetter](https://github.com/phoemur/ipgetter). It then looks up your latitude and longitude based on that IP, using [python-geoip](https://pythonhosted.org/python-geoip/), and uses those coordinates to query the NOAA's API for your local weather. By default, Wezzer displays 12 hours of short hourly forecasts, and 2 days worth of extended forecasts. 
@@ -66,7 +72,7 @@ Wezzer will geolocate your computer by looking up your IP address, using [ipgett
 Wezzer can be run with a handful of commandline options to adjust your experience. Use `-h` or `--help` for a full list of options.
 
  ```
- $ ./wezzer.py --help
+ $ wezzer --help
  
  usage: wezzer.py [-h] [-c] [-d NUM_DAYS] [-t NUM_HOURS] [-w COLUMN_WIDTH]
                  [-z ZIP_CODE]
@@ -88,7 +94,7 @@ optional arguments:
 A typical run of Wezzer, with some options, will look something like this:
 
 ```
-$ ./wezzer.py -z 90210 -d 2 -t 6
+$ wezzer -z 90210 -d 2 -t 6
 
 Wezzer 0.1: Weather for West Hollywood, CA (2018-05-01 09:34 PM)
 
@@ -111,10 +117,11 @@ Thursday: Sunny, with a high near 71. West southwest wind 0 to 5 mph
 
 ## Roadmap
 
-You're looking at Wezzer 0.1. Future releases might look better or have more options. I'm toying with the idea of making a cross-platform GUI version called Gwezzer, but that's a bit further down the road.
+You're looking at Wezzer 0.1. Future releases might look better or have more options. I'm toying with the idea of making a cross-platform GUI version called Gwezzer, but that's a bit further down the road. I'd also like to make it possible to create a ~/.wezzer_profile to store your default options in, like for example, if you always wanted to display wezzer with colors, or if you always wanted to override the IP lookup by specifying the ZIP Code for Beverly Hills 90210.
 
 ## Known Issues
 
 * Wezzer is incompatible with Python 3.
 * You can't paginate Wezzer with tools like `less` or `more` or `something in between`.
 * Wezzer uses Unicode to print up and down arrows. Wezzer wants to print Unicode suns and clouds but hasn't figured out how to do that yet.
+* Wezzer won't give you a backrub.
