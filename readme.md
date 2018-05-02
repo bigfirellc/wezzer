@@ -24,10 +24,16 @@ git clone https://github.com/nqnzp/wezzer.git
 
 It's recommended that you run Wezzer in a virtualenv, so make sure that you have a copy of virtualenv for your environment.
 
-For example, on Ubuntu:
+For example, on Ubuntu, just install it from apt:
 
 ```bash
 sudo apt install python-virtualenv
+```
+
+Or on macOS, install [Homebrew](https://brew.sh/), then install virtualenv with `brew`:
+
+```
+brew install pyenv-virtualenv
 ```
 
 Create a new virtualenv, for instance, inside of your home directory, and then activate it:
