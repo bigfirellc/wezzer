@@ -74,7 +74,7 @@ Wezzer can be run with a handful of commandline options to adjust your experienc
  ```
  $ wezzer --help
  
- usage: wezzer.py [-h] [-c] [-d NUM_DAYS] [-t NUM_HOURS] [-w COLUMN_WIDTH]
+ usage: wezzer [-h] [-c] [-d NUM_DAYS] [-t NUM_HOURS] [-w COLUMN_WIDTH]
                  [-z ZIP_CODE]
 
 optional arguments:
