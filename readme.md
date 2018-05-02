@@ -85,30 +85,27 @@ optional arguments:
 ```
 
 ### Sample Output
-A typical run of Wezzer will look something like this:
+A typical run of Wezzer, with some options, will look something like this:
 
 ```
-Wezzer 0.1: Weather for Upper Montclair, NJ (2018-05-01 09:25 PM)
+$ ./wezzer.py -z 90210 -d 2 -t 6
 
-12-hour forecast
-09:00 PM - 10:00 PM ▲ 76F Mostly Clear
-10:00 PM - 11:00 PM ▼ 72F Mostly Clear
-11:00 PM - 12:00 AM ▼ 67F Mostly Clear
-12:00 AM - 01:00 AM ▼ 65F Mostly Clear
-01:00 AM - 02:00 AM ▼ 64F Mostly Clear
-02:00 AM - 03:00 AM ▼ 62F Mostly Clear
-03:00 AM - 04:00 AM ▼ 60F Mostly Clear
-04:00 AM - 05:00 AM ▼ 59F Mostly Clear
-05:00 AM - 06:00 AM ▼ 58F Mostly Clear
-06:00 AM - 07:00 AM ▼ 57F Sunny
-07:00 AM - 08:00 AM ▲ 58F Sunny
-08:00 AM - 09:00 AM ▲ 59F Sunny
+Wezzer 0.1: Weather for West Hollywood, CA (2018-05-01 09:34 PM)
+
+6-hour forecast
+06:00 PM - 07:00 PM ▲ 63F Chance Showers And Thunderstorms
+07:00 PM - 08:00 PM ▼ 62F Chance Showers And Thunderstorms
+08:00 PM - 09:00 PM ▼ 59F Chance Showers And Thunderstorms
+09:00 PM - 10:00 PM ▼ 58F Chance Showers And Thunderstorms
+10:00 PM - 11:00 PM ▼ 57F Chance Showers And Thunderstorms
+11:00 PM - 12:00 AM ▼ 56F Chance Showers And Thunderstorms
 
 2-Day Extended Forecast
-Tonight: Mostly clear. Low around 55, with temperatures rising to around 58 overnight. West wind 3 to 8 mph.
-Wednesday: Sunny, with a high near 84. West wind 3 to 15 mph.
-Wednesday Night: Partly cloudy. Low around 64, with temperatures rising to around 67 overnight. Southwest wind 3 to 15 mph.
-Thursday: A slight chance of showers and thunderstorms after noon. Mostly sunny. High near 88, with temperatures falling to around
-85 in the afternoon. Southwest wind 3 to 15 mph. Chance of precipitation is 20%.
+Tonight: A chance of showers and thunderstorms. Mostly cloudy, with a low around 53.
+South southeast wind 0 to 10 mph. Chance of precipitation is 40%.
+Wednesday: A slight chance of rain showers before 11am. Partly sunny, with a high near 64.
+South wind 0 to 10 mph. Chance of precipitation is 20%.
+Wednesday Night: Partly cloudy, with a low around 52. West southwest wind 0 to 10 mph.
+Thursday: Sunny, with a high near 71. West southwest wind 0 to 5 mph
 ```
   

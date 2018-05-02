@@ -2,8 +2,7 @@
 
 """
 wezzer.py
-A dead simple app to get local weather
-information and print it to the terminal.
+it's wezzer, for weather
 
 Currently only compatible with Python 2.7
 """
