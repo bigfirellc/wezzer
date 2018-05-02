@@ -18,6 +18,7 @@ import json
 import requests
 from termcolor import colored, cprint
 import textwrap
+from pprint import pprint
 
 
 # A handful of really short function definitions
@@ -115,8 +116,15 @@ def main():
     hourly_default = results.num_hours
     hourly_default_str = str(results.num_hours)
     color_on = results.color_on
-    column_width = results.column_width
     zip_code = results.zip_code
+
+    # Setting up the textwrapper object
+    indstr = "    "
+    wrapper = textwrap.TextWrapper()
+    wrapper.width = results.column_width
+    wrapper.initial_indent = indstr
+    wrapper.subsequent_indent = indstr
+
 
     # Make a datetime object for right now's time
     d = datetime.datetime.now()
@@ -174,6 +182,9 @@ def main():
     # the time, temp, and forecast
 
     for period in hourly_data["properties"]["periods"]:
+
+        # pprint(period)
+
         # Limit the output to what was set on
         # command line or default
         if period["number"] > hourly_default:
@@ -219,7 +230,8 @@ def main():
         print (trend + " ", end='')
         print (temperature, end='')
         print (period["temperatureUnit"] + " ", end='')
-        print (period["shortForecast"])
+        print (period["shortForecast"], end='')
+        print (", wind " + period["windSpeed"] + " " + period["windDirection"])
 
     # Print a nice message about the x-Day forecast
     if color_on:
@@ -231,18 +243,30 @@ def main():
     # Iterate through the forecast JSON and print
     # the name and forecast
     for period in forecast_data["properties"]["periods"]:
+
         if period["number"] > extended_default:
             break
+
+        #pprint(period)
 
         if color_on:
             print (colored(period["name"] + ": ", 'cyan'), end='')
         else:
-            print (period["name"] + ": ", end='')
+            print (period["name"], end='')
 
-        fork = period["detailedForecast"]
+        if period["temperatureTrend"] == "falling":
+            trend = colored(u'\u25bc', 'blue')
+        elif period["temperatureTrend"] == "rising":
+            trend = colored(u'\u25b2', 'red')
+        else:
+            trend = colored(u'\u25aa')
+
+        cprint(trend, end='')
+        cprint(str(period["temperature"]), attrs=['bold'], end='')
+        print(period["temperatureUnit"])
 
         # Use text wrap to limit the output to x characters wide
-        print(textwrap.fill(fork, column_width))
+        print(wrapper.fill(period["detailedForecast"]))
 
     # Just for formatting
     print()
