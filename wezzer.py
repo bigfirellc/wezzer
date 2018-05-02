@@ -6,25 +6,6 @@ A dead simple app to get local weather
 information and print it to the terminal.
 
 Currently only compatible with Python 2.7
-
-Queries the weather.gov API, which you can read more about at:
-https://www.weather.gov/documentation/services-web-api
-
-Requires: requests, python-geoip, python-geoip-geolite2,
-dateutil, termcolor, geopy
-
-More info about GeoIP here:
-https://pythonhosted.org/python-geoip/
-
-More info about termcolor:
-https://pypi.org/project/termcolor/
-
-More info about geopy:
-http://geopy.readthedocs.io/en/latest/
-
-Use the requirements file to install dependencies:
-pip install -r requirements.txt
-
 """
 
 from __future__ import print_function
@@ -80,7 +61,30 @@ def get_forecast_data(forecast_url):
     return forecast_data  # returns a json object
 
 
-def parse_them_args(parser):
+def add_args(parser):
+    parser.add_argument('-c', '--color',
+                        action="store_true",
+                        dest="color_on",
+                        help="Enable terminal colors",
+                        default=False)
+    parser.add_argument('-d', '--days',
+                        action="store",
+                        dest="num_days",
+                        help="Number of days for Extended Forecast",
+                        default=2, type=int)
+    parser.add_argument('-t', '--hours',
+                        action="store",
+                        dest="num_hours",
+                        help="Number of hours for Hourly Forecast",
+                        default=12, type=int)
+    parser.add_argument('-w', '--width',
+                        action="store",
+                        dest="column_width",
+                        help="Max width of the output (default 80 columns)",
+                        default=80, type=int)
+    parser.add_argument('-z', '--zipcode',
+                        action="store", dest="zip_code",
+                        help="ZIP Code of desired weather location", type=str)
     return parser
 
 
@@ -105,29 +109,7 @@ def main():
 
     # Parsing some args from the command line. Neal Stephenson would be proud.
     parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--color',
-                        action="store_true",
-                        dest="color_on",
-                        help="Enable terminal colors",
-                        default=False)
-    parser.add_argument('-d', '--days',
-                        action="store",
-                        dest="num_days",
-                        help="Number of days for Extended Forecast",
-                        default=2, type=int)
-    parser.add_argument('-t', '--hours',
-                        action="store",
-                        dest="num_hours",
-                        help="Number of hours for Hourly Forecast",
-                        default=12, type=int)
-    parser.add_argument('-w', '--width',
-                        action="store",
-                        dest="column_width",
-                        help="Max width of the output (default 80 columns)",
-                        default=80, type=int)
-    parser.add_argument('-z', '--zipcode',
-                        action="store", dest="zip_code",
-                        help="ZIP Code of desired weather location", type=str)
+    parser = add_args(parser)
     results = parser.parse_args()
 
     # Initialize our variables off the arparser
@@ -142,8 +124,8 @@ def main():
     d = datetime.datetime.now()
     nowtime = d.strftime("%Y-%m-%d %I:%M %p")
 
-    # If the user provides a zip code, look up the lat/long for that,
-    # otherwise use their IP address
+    # If the user provides a zip code, look up the lat/long for 
+    # that, otherwise use their IP address
     if zip_code:
         geopy = get_geopy(zip_code)
         latlong_str = str(geopy.latitude) + "," + str(geopy.longitude)
@@ -156,17 +138,20 @@ def main():
         geoip = get_geoip(ip_addr)
         location = geoip.location
 
-        # Convert the geoip tuple to a string to use it in the API request
+        # Convert the geoip tuple to a string to use it 
+        # in the API request
         latlong_str = str(location[0]) + "," + str(location[1])
 
-    # Send API request to weather.gov to get the endpoint location data
+    # Send API request to weather.gov to get the 
+    # endpoint location data
     epdata = get_endpoint_data(latlong_str)
 
     # Derive the URLs from the returned endpoint data
     forecast_url = epdata["properties"]["forecast"]
     hourly_url = epdata["properties"]["forecastHourly"]
 
-    # Use the forecast and hourly forecast URLs to get forecast and hourly data
+    # Use the forecast and hourly forecast URLs to get 
+    # forecast and hourly data
     forecast_data = get_forecast_data(forecast_url)
     hourly_data = get_forecast_data(hourly_url)
 
@@ -187,10 +172,12 @@ def main():
     print(": Weather for %s, %s (%s)" % (city, state, nowtime))
     print("\n" + hourly_default_str + "-hour forecast")
 
-    # Iterate through the hourly JSON, print the time, temp, and forecast
+    # Iterate through the hourly JSON, print 
+    # the time, temp, and forecast
 
     for period in hourly_data["properties"]["periods"]:
-        # Limit the output to what was set on command line or default
+        # Limit the output to what was set on 
+        # command line or default
         if period["number"] > hourly_default:
             break
 
@@ -241,7 +228,8 @@ def main():
     else:
         print("\n" + str(results.num_days) + "-Day Extended Forecast")
 
-    # Iterate through the forecast JSON and print the name and forecast
+    # Iterate through the forecast JSON and print 
+    # the name and forecast
     for period in forecast_data["properties"]["periods"]:
         if period["number"] > extended_default:
             break
