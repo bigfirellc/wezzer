@@ -1,0 +1,7 @@
+requests
+python-geoip
+python-geoip-geolite2
+python-dateutil
+termcolor
+ipgetter
+geopy

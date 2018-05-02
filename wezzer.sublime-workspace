@@ -1,0 +1,396 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"mar",
+				"margin-left"
+			],
+			[
+				"font",
+				"font-weight"
+			],
+			[
+				"in",
+				"inline"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "wezzer.py",
+			"settings":
+			{
+				"buffer_size": 8382,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Package Control Messages\n========================\n\nVirtualenv\n----------\n\n  Sublime Text - Virtualenv\n  =========================\n  \n  Manage your virtualenvs directly from Sublime Text 3. (BETA)\n  \n  ## Features\n  \n  - Reusable build system. Execute code with a virtualenv without\n  editing your paths manually.\n  - Virtualenv search. Finds virtualenvs in the open folders or anywhere in your system.\n  - Activation/Deactivation. Select or disable the current virtualenv easily.\n  - Create and delete virtualenvs. With target python selection.\n  \n  \n  ## Support\n  \n  Only Sublime Text 3. Tested in Linux and Windows but it should work in OS X as well.\n  \n  \n  ## Usage\n  \n  - Set your build system to `Python + Virtualenv`. (Tools -> Build System)\n  - Search \"Virtualenv\" in the command palette.\n  \n  \n  For further details and instructions see the README:\n  Preferences -> Package Settings -> Virtualenv -> README\n  \n  -----------------------------------------------------------------------------------------\n  \n  Hello! Thank you for testing this package.\n  \n  IMPORTANT:\n  \n  Before you start using the commands verify that the default settings are suitable for\n  your system. Check them in Preferences -> Package Settings -> Virtualenv.\n  *But* do not modify the default settings as you will lose all the changes if the package\n  is updated. You should override the necessary settings in Virtualenv -> User instead.\n  \n  Please report any issues or suggestions in the issue tracker:\n  https://github.com/AdrianLC/sublime-text-virtualenv/issues\n",
+			"settings":
+			{
+				"buffer_size": 1550,
+				"line_ending": "Unix",
+				"name": "Package Control Messages",
+				"read_only": true,
+				"scratch": true
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 324.0,
+		"last_filter": "pa",
+		"selected_items":
+		[
+			[
+				"pa",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Package Control: Remove Channel"
+			],
+			[
+				"spell",
+				"Google Spell Check"
+			],
+			[
+				"colors",
+				"UI: Select Color Scheme"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"snipp",
+				"Snippet: if __name__ == '__main__'"
+			],
+			[
+				"",
+				"Snippet: For Loop"
+			],
+			[
+				"pack",
+				"Package Control: Remove Package"
+			],
+			[
+				"package control:i",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 412.0
+	},
+	"console":
+	{
+		"height": 139.0,
+		"history":
+		[
+			"sublime.cache_path()",
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/adamcopeland/GitHub/wezzer"
+	],
+	"file_history":
+	[
+		"/Volumes/R-66Y/Dropbox/Apps/weather.gov/wezzer.py",
+		"/Volumes/R-66Y/Dropbox/Apps/weather.gov/weatherbro.py",
+		"/Volumes/R-66Y/Dropbox/Apps/weather.gov/forecast.py",
+		"/Volumes/Luminaire/buttfart",
+		"/Users/adamcopeland/Code/thing.pl",
+		"/Users/adamcopeland/Library/Application Scripts/com.apple.iChat/iTunes Remote Control.applescript",
+		"/Users/adamcopeland/Downloads/Tank Crash!_billy@tankcrash.com.ics",
+		"/Users/adamcopeland/evil.sh",
+		"/Users/adamcopeland/Documents/GitHub/nqnzp.github.io/adam.md",
+		"/Users/adamcopeland/Downloads/c2960c405ex-universalk9-tar.152-2a.E1/c2960c405ex-universalk9-mz.152-2a.E1/info",
+		"/Users/adamcopeland/Documents/windows 10 key",
+		"/Users/adamcopeland/Code/dotNet/HelloWorld/HelloWorld.csproj",
+		"/Users/adamcopeland/Code/dotNet/HelloWorld/Program.cs",
+		"/Users/adamcopeland/Desktop/adamc.mobileconfig",
+		"/Users/adamcopeland/Pictures/squid/test.html",
+		"/Users/adamcopeland/Documents/Big Fire/Robot Percy Localization - Chinese/FVY85 Robot Percy/robot percy",
+		"/Users/adamcopeland/Documents/Big Fire/Robot Percy Localization - Chinese/FVY85 Robot Percy/specs.txt",
+		"/Users/adamcopeland/Desktop/To Cover/138th Street",
+		"/Users/adamcopeland/Downloads/From Paris to Beirut/rich 1st half.ses",
+		"/Users/adamcopeland/Documents/GitHub/automating-osint/python/module3-7.py",
+		"/Users/adamcopeland/Documents/facebook_essay.txt",
+		"/Users/adamcopeland/Documents/Kitematic/ghost/var/lib/ghost/config.js",
+		"/Users/adamcopeland/Documents/GitHub/automating-osint/python/Dockerfile",
+		"/Users/adamcopeland/Library/Application Support/Sublime Text 3/Packages/Anaconda/Anaconda.sublime-settings",
+		"/Users/adamcopeland/Library/Application Support/Sublime Text 3/Packages/User/Anaconda.sublime-settings",
+		"/Users/adamcopeland/Documents/GitHub/automating-osint/python/tweets.csv",
+		"/Users/adamcopeland/Documents/GitHub/automating-osint/python/module3-challenge.py",
+		"/Users/adamcopeland/Documents/GitHub/automating-osint/python/module4-bonus.py",
+		"/Users/adamcopeland/Desktop/Completion Rules.tmPreferences .xml",
+		"/Users/adamcopeland/Library/Application Support/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
+		"/Users/adamcopeland/Library/Application Support/Sublime Text 3/Packages/Anaconda/README.md",
+		"/Users/adamcopeland/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Users/adamcopeland/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/adamcopeland/Desktop/ascii",
+		"/Users/adamcopeland/Desktop/pcap.hex",
+		"/Users/adamcopeland/Desktop/pcap2.hex",
+		"/Volumes/Luminaire/Documents/vpsbackup/html/adam/inanity/obeysignal/functions.inc",
+		"/Volumes/Luminaire/Documents/vpsbackup/html/adam/inanity/obey/db.inc",
+		"/Volumes/Luminaire/Documents/vpsbackup/html/adam/inanity/obey/functions.inc",
+		"/Users/adamcopeland/Documents/LilyPond/Satisfied.ly",
+		"/Users/adamcopeland/Documents/LilyPond/example.ly",
+		"/Users/adamcopeland/Library/Application Support/Sublime Text 3/Packages/User/lilypond.sublime-build",
+		"/Users/adamcopeland/Desktop/tatami-galaxy-op.txt",
+		"/Volumes/adamncopeland/alana-and-adam.com/index.html",
+		"/Users/adamcopeland/Desktop/Wedding Details.txt",
+		"/Users/adamcopeland/Documents/Wedding/index.html",
+		"/Users/adamcopeland/Documents/Wedding/registry.html",
+		"/Users/adamcopeland/Documents/Neil Young",
+		"/Users/adamcopeland/Documents/netids_2016-06-27.txt",
+		"/Users/adamcopeland/Documents/Wedding/accommodations.html",
+		"/Volumes/adamncopeland/alana-and-adam.com/accommodations.html",
+		"/Volumes/adamncopeland/alana-and-adam.com/registry.html",
+		"/Users/adamcopeland/Documents/Wedding/wedding.css",
+		"/Users/adamcopeland/Documents/Wedding/index-old.html",
+		"/Users/adamcopeland/Desktop/NJEDGE Security.txt",
+		"/Users/adamcopeland/Library/Application Support/Sublime Text 3/Packages/User/HTML.sublime-build",
+		"/Users/adamcopeland/Library/Application Support/Sublime Text 3/Packages/User/html.sublime-build",
+		"/Users/adamcopeland/Desktop/Sketch.txt",
+		"/Users/adamcopeland/Documents/Everest Medical Laboratory Appeal.txt",
+		"/Users/adamcopeland/Documents/foremost_cancellation.txt",
+		"/Users/adamcopeland/Desktop/TTWY.txt",
+		"/Users/adamcopeland/Desktop/Sugar Rush",
+		"/Users/adamcopeland/Desktop/start.txt",
+		"/Users/adamcopeland/Desktop/MGT414-Practice-Notes.txt",
+		"/Users/adamcopeland/Documents/Resume/transcript.txt",
+		"/Users/adamcopeland/Desktop/MGT414",
+		"/Users/adamcopeland/Documents/Resume/TextResume.txt",
+		"/Users/adamcopeland/Desktop/key.txt",
+		"/Users/adamcopeland/Documents/Songbook/Side Man.tab",
+		"/Users/adamcopeland/Documents/Resume/My CV 2.html",
+		"/Users/adamcopeland/Documents/practice test notes",
+		"/Users/adamcopeland/Documents/Music video idea",
+		"/Users/adamcopeland/Desktop/strip-promo.txt",
+		"/Users/adamcopeland/Desktop/OFFICIAL MAZ DRUM TRACK LIST.txt",
+		"/Users/adamcopeland/Desktop/text.txt",
+		"/Users/adamcopeland/Desktop/sending.txt",
+		"/Users/adamcopeland/Desktop/letter.txt",
+		"/Users/adamcopeland/Documents/theproblem.txt"
+	],
+	"find":
+	{
+		"height": 25.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"folders":
+	[
+		{
+			"path": "/Users/adamcopeland/GitHub/wezzer"
+		}
+	],
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "wezzer.py",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 8382,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2538.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1550,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1550,
+								1550
+							]
+						],
+						"settings":
+						{
+							"auto_indent": false,
+							"default_dir": "/Users/adamcopeland/GitHub/wezzer",
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_width": 2,
+							"word_wrap": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 37.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 176.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Anaconda Python Builder",
+	"project": "",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/Documents/Wedding/index.html"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 214.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+		"max_columns": 3
+	}
+}
