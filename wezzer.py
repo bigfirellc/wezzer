@@ -192,7 +192,9 @@ def main():
         temperature = str(period["temperature"])
 
         if color_on:
-            if last_temp < this_temp:
+            if last_temp == 0:
+                trend = colored(u'\u25aa')
+            elif last_temp < this_temp:
                 trend = colored(u'\u25b2', 'red')
             elif last_temp > this_temp:
                 trend = colored(u'\u25bc', 'blue')
