@@ -52,18 +52,12 @@ Depending upon your environment, you may need to make wezzer.py executable befor
 chmod u+x ./wezzer.py
 ```
 
-And if you're really ambitious, you can copy Wezzer to a directory in your path, and rename it to remove the .py extension so you can run it from anywhere in your terminal:
-
-```
-sudo cp ./wezzer.py /usr/local/bin/wezzer
-```
-
 ## Running Wezzer
 
 Wezzer is easy to run once you've got it installed:
 
 ```bash
-wezzer
+./wezzer.py
 ```
 
 Wezzer will geolocate your computer by looking up your IP address, using [ipgetter](https://github.com/phoemur/ipgetter). It then looks up your latitude and longitude based on that IP, using [python-geoip](https://pythonhosted.org/python-geoip/), and uses those coordinates to query the NOAA's API for your local weather. By default, Wezzer displays 12 hours of short hourly forecasts, and 2 days worth of extended forecasts. 
@@ -72,9 +66,9 @@ Wezzer will geolocate your computer by looking up your IP address, using [ipgett
 Wezzer can be run with a handful of commandline options to adjust your experience. Use `-h` or `--help` for a full list of options.
 
  ```
- $ wezzer --help
+ $ ./wezzer --help
  
- usage: wezzer [-h] [-c] [-d NUM_DAYS] [-t NUM_HOURS] [-w COLUMN_WIDTH]
+ usage: wezzer.py [-h] [-c] [-d NUM_DAYS] [-t NUM_HOURS] [-w COLUMN_WIDTH]
                  [-z ZIP_CODE]
 
 optional arguments:
@@ -94,7 +88,7 @@ optional arguments:
 A typical run of Wezzer, with some options, will look something like this:
 
 ```
-$ wezzer -z 90210 -d 2 -t 6
+$ ./wezzer.py -z 90210 -d 2 -t 6
 
 Wezzer 0.1: Weather for West Hollywood, CA (2018-05-01 09:34 PM)
 
