@@ -172,11 +172,13 @@ def main():
     if color_on:
         version = colored(version, 'yellow')
         nowtime = colored(nowtime, 'yellow')
-        hourly_default_str = colored(hourly_default_str, 'yellow')
+        hourly_default_str = colored(hourly_default_str + "-Hour Forecast", 'yellow')
+    else:
+        hourly_default_str = hourly_default_str + "-Hour Forecast"
 
-    print("\n" + version, end='')
-    print(": Weather for %s, %s (%s)" % (city, state, nowtime))
-    print("\n" + hourly_default_str + "-hour forecast")
+    print("\n" + version)
+    print("Weather for %s, %s (%s)" % (city, state, nowtime))
+    print("\n" + hourly_default_str)
 
     # Iterate through the hourly JSON, print
     # the time, temp, and forecast
@@ -216,7 +218,9 @@ def main():
             end_time = colored(end_time, 'cyan')
             temperature = colored(temperature, attrs=['bold'])
         else:
-            if last_temp < this_temp:
+            if last_temp == 0:
+                trend = u'\u25aa'
+            elif last_temp < this_temp:
                 trend = u'\u25b2'
             elif last_temp > this_temp:
                 trend = u'\u25bc'
@@ -249,21 +253,28 @@ def main():
 
         #pprint(period)
 
+        unit = period["temperatureUnit"]
+
         if color_on:
-            print (colored(period["name"] + ": ", 'cyan'), end='')
+            name = colored(period["name"] + ": ", 'cyan')
+            if period["temperatureTrend"] == "falling":
+                trend = colored(u'\u25bc', 'blue')
+            elif period["temperatureTrend"] == "rising":
+                trend = colored(u'\u25b2', 'red')
+            else:
+                trend = colored(u'\u25aa')
+            temp = colored(str(period["temperature"]), attrs=['bold'])
         else:
-            print (period["name"], end='')
+            name = period["name"] + ": "
+            temp = str(period["temperature"])
+            if period["temperatureTrend"] == "falling":
+                trend = u'\u25bc'
+            elif period["temperatureTrend"] == "rising":
+                trend = u'\u25b2'
+            else:
+                trend = u'\u25aa'
 
-        if period["temperatureTrend"] == "falling":
-            trend = colored(u'\u25bc', 'blue')
-        elif period["temperatureTrend"] == "rising":
-            trend = colored(u'\u25b2', 'red')
-        else:
-            trend = colored(u'\u25aa')
-
-        cprint(trend, end='')
-        cprint(str(period["temperature"]), attrs=['bold'], end='')
-        print(period["temperatureUnit"])
+        print(name + trend + " " + temp + unit)
 
         # Use text wrap to limit the output to x characters wide
         print(wrapper.fill(period["detailedForecast"]))
