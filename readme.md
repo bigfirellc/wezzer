@@ -108,4 +108,9 @@ South wind 0 to 10 mph. Chance of precipitation is 20%.
 Wednesday Night: Partly cloudy, with a low around 52. West southwest wind 0 to 10 mph.
 Thursday: Sunny, with a high near 71. West southwest wind 0 to 5 mph
 ```
+
+## Roadmap
+
+You're looking at Wezzer 0.1. Future releases might look better or have more options. I'm toying with the idea of making a cross-platform GUI version called Gwezzer, but that's a bit further down the road.
+
   
