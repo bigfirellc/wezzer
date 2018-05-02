@@ -66,7 +66,7 @@ Wezzer will geolocate your computer by looking up your IP address, using [ipgett
 Wezzer can be run with a handful of commandline options to adjust your experience. Use `-h` or `--help` for a full list of options.
 
  ```
- $ ./wezzer --help
+ $ ./wezzer.py --help
  
  usage: wezzer.py [-h] [-c] [-d NUM_DAYS] [-t NUM_HOURS] [-w COLUMN_WIDTH]
                  [-z ZIP_CODE]
