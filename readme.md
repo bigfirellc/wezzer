@@ -94,25 +94,42 @@ optional arguments:
 A typical run of Wezzer, with some options, will look something like this:
 
 ```
-$ ./wezzer.py -z 90210 -d 2 -t 6
+$ ./wezzer.py -z 07042
 
-Wezzer 0.1: Weather for West Hollywood, CA (2018-05-01 09:34 PM)
+Wezzer 0.1.1
+Weather for Glen Ridge, NJ (2018-05-06 01:16 PM)
 
-6-hour forecast
-06:00 PM - 07:00 PM ▲ 63F Chance Showers And Thunderstorms
-07:00 PM - 08:00 PM ▼ 62F Chance Showers And Thunderstorms
-08:00 PM - 09:00 PM ▼ 59F Chance Showers And Thunderstorms
-09:00 PM - 10:00 PM ▼ 58F Chance Showers And Thunderstorms
-10:00 PM - 11:00 PM ▼ 57F Chance Showers And Thunderstorms
-11:00 PM - 12:00 AM ▼ 56F Chance Showers And Thunderstorms
+12-Hour Forecast
+01:00 PM - 02:00 PM ▪ 61F Slight Chance Rain Showers, wind 7 mph NE
+02:00 PM - 03:00 PM ▲ 62F Rain Showers Likely, wind 7 mph NE
+03:00 PM - 04:00 PM ▲ 63F Rain Showers Likely, wind 7 mph NE
+04:00 PM - 05:00 PM ▼ 62F Rain Showers Likely, wind 7 mph NE
+05:00 PM - 06:00 PM ▼ 61F Rain Showers Likely, wind 7 mph NE
+06:00 PM - 07:00 PM ▼ 60F Rain Showers Likely, wind 7 mph NE
+07:00 PM - 08:00 PM ▪ 60F Chance Rain Showers, wind 6 mph NE
+08:00 PM - 09:00 PM ▼ 59F Chance Rain Showers, wind 5 mph NE
+09:00 PM - 10:00 PM ▪ 59F Chance Rain Showers, wind 5 mph NE
+10:00 PM - 11:00 PM ▼ 58F Chance Rain Showers, wind 3 mph NE
+11:00 PM - 12:00 AM ▪ 58F Chance Rain Showers, wind 2 mph NE
+12:00 AM - 01:00 AM ▼ 57F Chance Rain Showers, wind 2 mph NE
 
 2-Day Extended Forecast
-Tonight: A chance of showers and thunderstorms. Mostly cloudy, with a low around 53.
-South southeast wind 0 to 10 mph. Chance of precipitation is 40%.
-Wednesday: A slight chance of rain showers before 11am. Partly sunny, with a high near 64.
-South wind 0 to 10 mph. Chance of precipitation is 20%.
-Wednesday Night: Partly cloudy, with a low around 52. West southwest wind 0 to 10 mph.
-Thursday: Sunny, with a high near 71. West southwest wind 0 to 5 mph
+This Afternoon: ▼ 63F
+    Rain showers likely. Cloudy. High near 63, with temperatures falling to
+    around 60 in the afternoon. Northeast wind around 7 mph. Chance of
+    precipitation is 60%. New rainfall amounts less than a tenth of an inch
+    possible.
+Tonight: ▪ 53F
+    Rain showers likely. Cloudy, with a low around 53. Northeast wind 2 to 7
+    mph. Chance of precipitation is 60%. New rainfall amounts between a tenth
+    and quarter of an inch possible.
+Monday: ▼ 67F
+    A slight chance of rain showers. Partly sunny. High near 67, with
+    temperatures falling to around 65 in the afternoon. Northeast wind 5 to 10
+    mph. Chance of precipitation is 20%.
+Monday Night: ▪ 49F
+    A slight chance of rain showers before 9pm. Partly cloudy, with a low around
+    49. East wind 3 to 9 mph. Chance of precipitation is 20%.
 ```
 
 ## Roadmap

@@ -16,6 +16,7 @@ from geopy.geocoders import Nominatim
 import ipgetter
 import json
 import requests
+import sys
 from termcolor import colored, cprint
 import textwrap
 from pprint import pprint
@@ -34,18 +35,31 @@ def get_geoip(ip_addr):
     return (match)  # returns a geoip object
 
 
-def get_geopy(location):
+def get_geopy_zip(zip):
     geo = Nominatim()
-    loc = geo.geocode(location)
+    loc = geo.geocode(zip)
+    return (loc)  # returns a geopy object
+
+def get_geopy_city(city):
+    geo = Nominatim()
+    loc = geo.geocode(city)
     return (loc)  # returns a geopy object
 
 
 def get_endpoint_data(geolocation):
-    response = requests.get("https://api.weather.gov/points/%s" % geolocation)
-    if response.status_code == 200:
-        endpoint_data = json.loads(response.content)
+    try:
+        r = requests.get("https://api.weather.gov/points/%s" % geolocation)
+        r.raise_for_status()
+    except requests.exceptions.HTTPError as err:
+        if r.status_code == 404:
+            print ("Error: Invalid address, city, or zip code provided.")
+        sys.exit(1)
+
+    if r.status_code == 200:
+        endpoint_data = json.loads(r.content)
     else:
-        print("[*] Failed to get response from API")
+        print("Error: Failed to get response from weather.gov API")
+
     return endpoint_data  # returns a json object
 
 
@@ -91,20 +105,10 @@ def add_args(parser):
 ========= MAIN ========
 """
 
-
-def main():
-
-    """
-    Way too much of the work is being done in main().
-    That will get fixed at some point.
-    A wiser man probably would have made
-    a bunch of this garbage object-oriented, but
-    I'm not in it for the wisdom.
-    I'm only in it for the money.
-    """
+if __name__ == "__main__":
 
     # The most important variable declaration
-    version = "Wezzer 0.1"
+    version = "Wezzer 0.1.1"
 
     # Parsing some args from the command line. Neal Stephenson would be proud.
     parser = argparse.ArgumentParser()
@@ -133,7 +137,7 @@ def main():
     # If the user provides a zip code, look up the lat/long for
     # that, otherwise use their IP address
     if zip_code:
-        geopy = get_geopy(zip_code)
+        geopy = get_geopy_zip(zip_code)
         latlong_str = str(geopy.latitude) + "," + str(geopy.longitude)
 
     else:
@@ -150,6 +154,7 @@ def main():
 
     # Send API request to weather.gov to get the
     # endpoint location data
+
     epdata = get_endpoint_data(latlong_str)
 
     # Derive the URLs from the returned endpoint data
@@ -278,11 +283,3 @@ def main():
 
         # Use text wrap to limit the output to x characters wide
         print(wrapper.fill(period["detailedForecast"]))
-
-    # Just for formatting
-    print()
-
-
-# Prevent fools from importing this mess as a library
-if __name__ == "__main__":
-    main()
