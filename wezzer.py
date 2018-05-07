@@ -9,6 +9,7 @@ github.com/nqnzp/wezzer
 from __future__ import print_function
 
 import argparse
+import click
 import datetime
 from dateutil.parser import parse
 from geoip import geolite2
@@ -19,11 +20,20 @@ import requests
 import sys
 from termcolor import colored, cprint
 import textwrap
-from pprint import pprint
 
+@click.command()
+@click.option('--address', help="Address for the forecast", type=str)
+@click.option('--color', default=True, help="Enable ANSI color", type=bool)
+@click.option('--days', default=5, help="Number of days for the extended forecast", type=int)
+@click.option('--hours', default=5, help="Number of hours for the hourly forecast", type=int)
+@click.option('--width', default=80, help="Display width", type=int)
+@click.option('--zip', help='ZIP code for the forecast', type=int)
+def cli(address, color, days, hours, width, zip):
+    hello()
+    pass
 
-# A handful of really short function definitions
-# All of them return... things
+def hello():
+    click.echo("hello world")
 
 def get_localhost_ip():
     myip = ipgetter.myip()
@@ -105,7 +115,7 @@ def add_args(parser):
 ========= MAIN ========
 """
 
-if __name__ == "__main__":
+def main():
 
     # The most important variable declaration
     version = "Wezzer 0.1.1"
@@ -283,3 +293,7 @@ if __name__ == "__main__":
 
         # Use text wrap to limit the output to x characters wide
         print(wrapper.fill(period["detailedForecast"]))
+
+
+if __name__ == "__main__":
+    cli()
