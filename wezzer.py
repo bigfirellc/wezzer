@@ -16,24 +16,11 @@ from geoip import geolite2
 from geopy.geocoders import Nominatim
 import ipgetter
 import json
+import re
 import requests
 import sys
 from termcolor import colored, cprint
 import textwrap
-
-@click.command()
-@click.option('--address', help="Address for the forecast", type=str)
-@click.option('--color', default=True, help="Enable ANSI color", type=bool)
-@click.option('--days', default=5, help="Number of days for the extended forecast", type=int)
-@click.option('--hours', default=5, help="Number of hours for the hourly forecast", type=int)
-@click.option('--width', default=80, help="Display width", type=int)
-@click.option('--zip', help='ZIP code for the forecast', type=int)
-def cli(address, color, days, hours, width, zip):
-    hello()
-    pass
-
-def hello():
-    click.echo("hello world")
 
 def get_localhost_ip():
     myip = ipgetter.myip()
@@ -83,54 +70,51 @@ def get_forecast_data(forecast_url):
 
     return forecast_data  # returns a json object
 
+def get_extended_forecast(endpoint_data):
+    pass
 
-def add_args(parser):
-    parser.add_argument('-c', '--color',
-                        action="store_true",
-                        dest="color_on",
-                        help="Enable terminal colors",
-                        default=False)
-    parser.add_argument('-d', '--days',
-                        action="store",
-                        dest="num_days",
-                        help="Number of days for Extended Forecast",
-                        default=2, type=int)
-    parser.add_argument('-t', '--hours',
-                        action="store",
-                        dest="num_hours",
-                        help="Number of hours for Hourly Forecast",
-                        default=12, type=int)
-    parser.add_argument('-w', '--width',
-                        action="store",
-                        dest="column_width",
-                        help="Max width of the output (default 80 columns)",
-                        default=80, type=int)
-    parser.add_argument('-z', '--zipcode',
-                        action="store", dest="zip_code",
-                        help="ZIP Code of desired weather location", type=str)
-    return parser
+def get_hourly_forecast(endpoint_data):
+    pass
+
+def validate_days(ctx, param, value):
+    if value < 0:
+        raise click.BadParameter('Days should be a positive integer.')
+    value = value * 2
+    return value
+
+def validate_zip(ctx, param, value):
+    zipCode = re.compile(r"(\s*)?(\d){5}(\s*)?")
+    if not (zipCode.match(value) or value == ""):
+        raise click.BadParameter('Invalid zip code format.')
+    return value
+
+def zip_forecast(zip):
+    click.echo("[*] Getting forecast for zip code %s" % zip)
+    gp = get_geopy_zip(zip)
+    latlong = str(gp.latitude) + "," + str(gp.longitude)
+    ep = get_endpoint_data(latlong)
 
 
 """
 ========= MAIN ========
 """
 
+@click.command()
+@click.option('--address', help="Address for the forecast", type=str)
+@click.option('--color', default=True, help="Enable ANSI color", type=bool)
+@click.option('--days', default=5, callback=validate_days, help="Number of days for the extended forecast", type=int)
+@click.option('--hours', default=5, help="Number of hours for the hourly forecast", type=int)
+@click.option('--width', default=80, help="Display width", type=int)
+@click.option('--zip', default="", callback=validate_zip, help='ZIP code for the forecast', type=str)
+def cli(address, color, days, hours, width, zip):
+    if (zip):
+        zip_forecast(zip)
+    pass
+
 def main():
 
     # The most important variable declaration
-    version = "Wezzer 0.1.1"
-
-    # Parsing some args from the command line. Neal Stephenson would be proud.
-    parser = argparse.ArgumentParser()
-    parser = add_args(parser)
-    results = parser.parse_args()
-
-    # Initialize our variables off the arparser
-    extended_default = results.num_days * 2
-    hourly_default = results.num_hours
-    hourly_default_str = str(results.num_hours)
-    color_on = results.color_on
-    zip_code = results.zip_code
+    version = "Wezzer 0.2.0"
 
     # Setting up the textwrapper object
     indstr = "    "
