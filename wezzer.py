@@ -109,6 +109,11 @@ def zip_forecast(zip):
 def cli(address, color, days, hours, width, zip):
     if (zip):
         zip_forecast(zip)
+    elif (address):
+        address_forecast(address)
+    else:
+        ip_forecast()
+
     pass
 
 def main():
