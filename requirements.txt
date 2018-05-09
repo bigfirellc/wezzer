@@ -6,3 +6,5 @@ python-dateutil
 termcolor
 ipgetter
 geopy
+typing
+colorama
