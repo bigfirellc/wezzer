@@ -18,8 +18,6 @@ import json
 import re
 import requests
 import sys
-from termcolor import colored, cprint
-import textwrap
 from typing import Dict, Any
 import win_inet_pton
 
@@ -90,7 +88,7 @@ def print_extended_forecast(forecast, days, color, width):
             break
 
         ef += "\n" + period["name"] + " " + str(period["temperature"]) + period["temperatureUnit"] 
-        ef += "\n" + click.wrap_text(period["detailedForecast"], initial_indent='  ', subsequent_indent='  ')
+        ef += "\n" + click.wrap_text(period["detailedForecast"], initial_indent="    ", subsequent_indent="    ")
 
     return ef
     
@@ -181,8 +179,10 @@ def cli(address, color, days, hours, width, zip):
     if days > 0:
         output += print_extended_forecast(forecast, days, color, width)
 
-    click.echo(output, color=True)
-    #click.confirm("\n[Press Enter/Return to exit]\n", show_default=False, prompt_suffix='')
+    if color:
+        click.echo(output + "\n")
+    else:
+        click.echo(output + "\n", color=False)
 
 if __name__ == "__main__":
     cli()

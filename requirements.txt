@@ -6,6 +6,5 @@ python-dateutil
 python-geoip
 python-geoip-geolite2
 requests
-termcolor
 typing
 win-inet-pton
