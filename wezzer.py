@@ -181,7 +181,7 @@ def cli(address, color, days, hours, width, zip):
     if days > 0:
         output += print_extended_forecast(forecast, days, color, width)
 
-    click.echo_via_pager(output, color=True)
+    click.echo(output, color=True)
     #click.confirm("\n[Press Enter/Return to exit]\n", show_default=False, prompt_suffix='')
 
 if __name__ == "__main__":
