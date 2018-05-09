@@ -8,7 +8,6 @@ github.com/nqnzp/wezzer
 
 from __future__ import print_function
 
-import argparse
 import click
 import datetime
 from dateutil.parser import parse
@@ -21,21 +20,6 @@ import requests
 import sys
 from termcolor import colored, cprint
 import textwrap
-
-def get_localhost_ip():
-    myip = ipgetter.myip()
-    return str(myip)     # returns a string of format "0.0.0.0"
-
-
-def get_geoip(ip_addr):
-    match = geolite2.lookup(ip_addr)
-    return (match)  # returns a geoip object
-
-
-def get_geopy_zip(zip):
-    geo = Nominatim()
-    loc = geo.geocode(zip)
-    return (loc)  # returns a geopy object
 
 def get_geopy_city(city):
     geo = Nominatim()
@@ -76,6 +60,14 @@ def get_extended_forecast(endpoint_data):
 def get_hourly_forecast(endpoint_data):
     pass
 
+def ipaddr_forecast():
+    ipaddr = str(ipgetter.myip())
+    click.echo("[*] Your IP address is %s" % ipaddr)
+    geoip = geolite2.lookup(ipaddr)
+    location = geoip.location
+    latlong = str(location[0]) + "," + str(location[1])
+    ep = get_endpoint_data(latlong)
+
 def validate_days(ctx, param, value):
     if value < 0:
         raise click.BadParameter('Days should be a positive integer.')
@@ -91,7 +83,9 @@ def validate_zip(ctx, param, value):
 def zip_forecast(zip):
     click.echo("[*] Getting forecast for zip code %s" % zip)
     gp = get_geopy_zip(zip)
-    latlong = str(gp.latitude) + "," + str(gp.longitude)
+    geo = Nominatim()
+    loc = geo.geocode(zip)
+    latlong = str(loc.latitude) + "," + str(loc.longitude)
     ep = get_endpoint_data(latlong)
 
 
@@ -99,27 +93,29 @@ def zip_forecast(zip):
 ========= MAIN ========
 """
 
+
 @click.command()
 @click.option('--address', help="Address for the forecast", type=str)
-@click.option('--color', default=True, help="Enable ANSI color", type=bool)
+@click.option('--color/--no-color', default=True, help="Enable ANSI color")
 @click.option('--days', default=5, callback=validate_days, help="Number of days for the extended forecast", type=int)
 @click.option('--hours', default=5, help="Number of hours for the hourly forecast", type=int)
 @click.option('--width', default=80, help="Display width", type=int)
 @click.option('--zip', default="", callback=validate_zip, help='ZIP code for the forecast', type=str)
 def cli(address, color, days, hours, width, zip):
+
+    click.echo(version)
+    click.echo(nowtime)
+
+
     if (zip):
         zip_forecast(zip)
     elif (address):
         address_forecast(address)
     else:
-        ip_forecast()
-
+        ipaddr_forecast()
     pass
 
 def main():
-
-    # The most important variable declaration
-    version = "Wezzer 0.2.0"
 
     # Setting up the textwrapper object
     indstr = "    "
@@ -128,33 +124,7 @@ def main():
     wrapper.initial_indent = indstr
     wrapper.subsequent_indent = indstr
 
-
-    # Make a datetime object for right now's time
-    d = datetime.datetime.now()
-    nowtime = d.strftime("%Y-%m-%d %I:%M %p")
-
-    # If the user provides a zip code, look up the lat/long for
-    # that, otherwise use their IP address
-    if zip_code:
-        geopy = get_geopy_zip(zip_code)
-        latlong_str = str(geopy.latitude) + "," + str(geopy.longitude)
-
-    else:
-        # Determine the IP address of the host running the script
-        ip_addr = get_localhost_ip()
-
-        # Determine the latitude and longitude of the IP address
-        geoip = get_geoip(ip_addr)
-        location = geoip.location
-
-        # Convert the geoip tuple to a string to use it
-        # in the API request
-        latlong_str = str(location[0]) + "," + str(location[1])
-
-    # Send API request to weather.gov to get the
-    # endpoint location data
-
-    epdata = get_endpoint_data(latlong_str)
+    #####
 
     # Derive the URLs from the returned endpoint data
     forecast_url = epdata["properties"]["forecast"]
@@ -255,8 +225,6 @@ def main():
         if period["number"] > extended_default:
             break
 
-        #pprint(period)
-
         unit = period["temperatureUnit"]
 
         if color_on:
@@ -285,4 +253,7 @@ def main():
 
 
 if __name__ == "__main__":
+    version = "Wezzer 0.2.0"
+    nowtime = datetime.datetime.now().strftime("%Y-%m-%d %I:%M %p")
+
     cli()
