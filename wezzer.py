@@ -21,6 +21,7 @@ import sys
 from termcolor import colored, cprint
 import textwrap
 from typing import Dict, Any
+import win_inet_pton
 
 
 def epdata_to_forecast(ep):

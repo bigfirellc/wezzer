@@ -1,10 +1,11 @@
 click
-requests
+colorama
+geopy
+ipgetter
+python-dateutil
 python-geoip
 python-geoip-geolite2
-python-dateutil
+requests
 termcolor
-ipgetter
-geopy
 typing
-colorama
+win-inet-pton
