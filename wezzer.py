@@ -78,27 +78,28 @@ def ipaddr_forecast():
     return epdata_to_forecast(ep)  # type: Dict[str, Any]
 
 def print_extended_forecast(forecast, days, color, width):
-    if color:
-        click.secho("\n" + str(days / 2) + "-Day Forecast", fg="yellow")
-    else:
-        click.echo("\n" + str(days / 2) + "-Day Forecast")
+    
+    ef = click.style("\n\n" + str(days / 2) + "-Day Forecast", fg="cyan") + "\n"
+    
+    for i in range(1,width):
+        ef += "="
 
     for period in forecast["extended"]["properties"]["periods"]:
 
         if period["number"] > days:
             break
 
-        click.echo(period["name"] + " "
-                   + str(period["temperature"]) + period["temperatureUnit"]
-                   + "\n" + period["detailedForecast"])
+        ef += "\n" + period["name"] + " " + str(period["temperature"]) + period["temperatureUnit"] 
+        ef += "\n" + click.wrap_text(period["detailedForecast"], initial_indent='  ', subsequent_indent='  ')
 
-    pass
-
+    return ef
+    
 def print_hourly_forecast(forecast, hours, color, width):
-    if color:
-        click.secho("\n" + str(hours) + "-Hour Forecast", fg="yellow")
-    else:
-        click.echo("\n" + str(hours) + "-Hour Forecast")
+    
+    hf = click.style("\n\n" + str(hours) + "-Hour Forecast", fg="cyan") + "\n"
+    
+    for i in range(1,width):
+        hf += "="
 
     last_temp = int()
 
@@ -121,12 +122,13 @@ def print_hourly_forecast(forecast, hours, color, width):
         start_time = parse(period["startTime"]).strftime("%I:%M%p")
         end_time = parse(period["endTime"]).strftime("%I:%M%p")
 
-        click.echo(start_time + "-" + end_time + " " + trend + " "
-                   + str(period["temperature"]) + period["temperatureUnit"] + " "
-                   + period["shortForecast"] + ", wind " + period["windSpeed"]
-                   + " " + period["windDirection"])
+        hf += "\n" + (start_time + "-" + end_time + " " + trend + " "
+              + str(period["temperature"]) + period["temperatureUnit"] + " "
+              + period["shortForecast"] + ", wind " + period["windSpeed"]
+              + " " + period["windDirection"])
 
-    pass
+    return hf
+    
 
 def validate_days(ctx, param, value):
     if value < 0:
@@ -148,8 +150,8 @@ def validate_zip(ctx, param, value):
 @click.command()
 @click.option('--address', help="Address for the forecast", type=str)
 @click.option('--color/--no-color', default=True, help="Enable ANSI color")
-@click.option('--days', default=5, callback=validate_days, help="Number of days for the extended forecast", type=int)
-@click.option('--hours', default=12, help="Number of hours for the hourly forecast", type=int)
+@click.option('--days', default=3, callback=validate_days, help="Number of days for the extended forecast", type=int)
+@click.option('--hours', default=6, help="Number of hours for the hourly forecast", type=int)
 @click.option('--width', default=80, help="Display width", type=int)
 @click.option('--zip', default="", callback=validate_zip, help='ZIP code for the forecast', type=str)
 def cli(address, color, days, hours, width, zip):
@@ -160,8 +162,9 @@ def cli(address, color, days, hours, width, zip):
         version = click.style("Wezzer 0.2.0", fg="yellow")
         nowtime = click.style(datetime.datetime.now().strftime("%Y-%m-%d %I:%M %p"), fg="yellow")
     else:
-        version = "Wezzer 0.2.0"
+        version = "\nWezzer 0.2.0"
         nowtime = datetime.datetime.now().strftime("%Y-%m-%d %I:%M %p")
+
 
     if (zip):
         forecast = geocode_forecast(zip)
@@ -170,14 +173,16 @@ def cli(address, color, days, hours, width, zip):
     else:
         forecast = ipaddr_forecast()
 
-    click.echo(version)
-    click.echo(nowtime)
-    click.echo("Weather for %s, %s" % (forecast["city"], forecast["state"]))
-
+    header = "\nWeather for %s, %s" % (forecast["city"], forecast["state"])
+    output = version + "\n" + nowtime + header
+    
     if hours > 0:
-        print_hourly_forecast(forecast, hours, color, width)
+        output += print_hourly_forecast(forecast, hours, color, width)
     if days > 0:
-        print_extended_forecast(forecast, days, color, width)
+        output += print_extended_forecast(forecast, days, color, width)
+
+    click.echo_via_pager(output, color=True)
+    #click.confirm("\n[Press Enter/Return to exit]\n", show_default=False, prompt_suffix='')
 
 if __name__ == "__main__":
     cli()
