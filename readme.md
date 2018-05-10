@@ -114,7 +114,7 @@ Options:
 ```
 
 ### Sample Output
-A run of wezzer with some options, will look something like this:
+A run of wezzer with some options will look something like this:
 
 ```commandline
 $ ./wezzer.py --address "Citi Field" --days 2 --hours 4
