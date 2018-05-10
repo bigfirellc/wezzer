@@ -1,5 +1,7 @@
 # wezzer
 
+<img src="https://user-images.githubusercontent.com/20565648/39849784-0373a2b8-53dc-11e8-9b0a-6f1715d441f8.png" width="450"/>
+
 ## Synopsis
 
 wezzer is a simple Python command line interface that pulls local weather information based on your geolocation,
