@@ -1,20 +1,27 @@
-# Wezzer
+# wezzer
 
 ## Synopsis
 
-Wezzer is a dead simple Python app to pull local weather information based on your geolocation and print it to your terminal with some okay formatting. 
+wezzer is a simple Python command line interface that pulls local weather information based on your geolocation,
+zip code, or address and prints it to your console with some decent formatting. 
 
-It was born out of my frustration with most weather websites being full of ads, and just generally garbage to look at. 
+It was born out of my frustration with most weather websites being full of ads, and generally garbage to look at. 
 
-For its forecast source, Wezzer uses NOAA's excellent [weather.gov API](https://www.weather.gov/documentation/services-web-api).
+For its forecast source, wezzer uses NOAA's excellent [weather.gov API](https://www.weather.gov/documentation/services-web-api).
 
-Wezzer is currently only compatible with Python 2.7.
+wezzer is compatible with Python 2.7 and Python 3.6
+
+wezzer has been tested to run nicely on Ubuntu, Windows, and macOS.
+
+It's wezzer, for weather.
+
 
 ## Installation
 
-Clone the repository to your home directory
+Download the zip file from the releases page and unzip it, or clone the repository to 
+somewhere memorable in your home directory, like a GitHub directory:
 
-```bash
+```commandline
 mkdir ~/GitHub/
 cd ~/GitHub/
 git clone https://github.com/nqnzp/wezzer.git
@@ -22,123 +29,144 @@ git clone https://github.com/nqnzp/wezzer.git
 
 ### virtualenv
 
-It's recommended that you run Wezzer in a virtualenv, so make sure that you have a copy of virtualenv for your environment.
+It's recommended that you run wezzer in a virtualenv, so make sure that you have a copy of virtualenv for your environment.
 
 For example, on Ubuntu, just install it from apt:
 
-```bash
+```commandline
 sudo apt install python-virtualenv
 ```
 
-Or on macOS, install [Homebrew](https://brew.sh/), then install virtualenv with `brew`:
+On Windows, it's helpful to use [Chocolatey](https://chocolatey.org) to set up your Python environment.
+Install Chocolatey, then use it to install python and then use python to install virtualenv
 
+```commandline
+choco install python
+easy_install virtualenv
 ```
+
+For macOS, install [Homebrew](https://brew.sh/), then install python and virtualenv with `brew`:
+
+```commandline
+brew install python@2
 brew install pyenv-virtualenv
 ```
 
-Create a new virtualenv, for instance, inside of your home directory, and then activate it:
+Change directories into the `wezzer` dir, create a new virtualenv, for instance, and then activate it. 
+On Linux and macOS:
 
-```bash
-mkdir ~/venv
-virtualenv ~/venv
-. ~/venv/bin/activate
+```commandline
+cd wezzer
+virtualenv venv
+. venv/bin/activate
+```
+
+On Windows:
+```commandline
+cd wezzer
+virtualenv venv
+venv/Scripts/activate
 ```
 
 ### Dependencies
-Use the requirements.txt file to install dependencies, which are numerous.
+Use `pip` and the `requirements.txt` file to install dependencies:
 
-```bash
+```commandLine
 cd ~/GitHub/wezzer/
 pip install -r requirements.txt
 ```
 
 Depending upon your environment, you may need to make wezzer.py executable before you run it.
 
-```
+```commandline
 chmod u+x ./wezzer.py
 ```
 
-## Running Wezzer
+## Running wezzer
 
-Wezzer is easy to run once you've got it installed:
+wezzer is easy to run once you've got it installed:
 
-```bash
+```commandline
 ./wezzer.py
 ```
 
-Wezzer will geolocate your computer by looking up your IP address, using [ipgetter](https://github.com/phoemur/ipgetter). It then looks up your latitude and longitude based on that IP, using [python-geoip](https://pythonhosted.org/python-geoip/), and uses those coordinates to query the NOAA's API for your local weather. By default, Wezzer displays 12 hours of short hourly forecasts, and 2 days worth of extended forecasts. 
+By default, wezzer will geolocate your computer by looking up your IP address, using [ipgetter](https://github.com/phoemur/ipgetter). It then looks up your latitude and longitude based on that IP, using [python-geoip](https://pythonhosted.org/python-geoip/), and uses those coordinates to query the NOAA's API for your local weather. Run without any options, wezzer will display 6 hours of hourly forecasts, and 3 days worth of extended forecasts. 
 
 ### Commandline Options
-Wezzer can be run with a handful of commandline options to adjust your experience. Use `-h` or `--help` for a full list of options.
+wezzer can be run with a handful of commandline options to adjust your experience. Use `-h` or `--help` for a full list of options.
 
- ```
- $ ./wezzer.py --help
- 
- usage: wezzer.py [-h] [-c] [-d NUM_DAYS] [-t NUM_HOURS] [-w COLUMN_WIDTH]
-                 [-z ZIP_CODE]
+ ```commandline
+ ./wezzer.py --help
+Usage: wezzer.py [OPTIONS]
 
-optional arguments:
-  -h, --help            show this help message and exit
-  -c, --color           Enable terminal colors
-  -d NUM_DAYS, --days NUM_DAYS
-                        Number of days for Extended Forecast
-  -t NUM_HOURS, --hours NUM_HOURS
-                        Number of hours for Hourly Forecast
-  -w COLUMN_WIDTH, --width COLUMN_WIDTH
-                        Max width of the output (default 80 columns)
-  -z ZIP_CODE, --zipcode ZIP_CODE
-                        ZIP Code of desired weather location
+Options:
+  --address TEXT        Address or place for the forecast. Use quotes, eg.
+                        "Bull Shoals, AR". Notable place names work too, like
+                        "Griffith Park" or "Barton Springs Pool"
+  --color / --no-color  Enable ANSI color
+  --days INTEGER        # of days in the extended forecast, default is 3
+  --hours INTEGER       # of hours in the hourly forecast, default is 6
+  --width INTEGER       Display width by # of columns, default is 80
+  --zip TEXT            ZIP code for the forecast
+  --help                Show this message and exit.
+(venv) adamcopeland@prometheus:~/Documents/GitHub/wezzer$ 
 ```
 
 ### Sample Output
-A typical run of Wezzer, with some options, will look something like this:
+A run of wezzer with some options, will look something like this:
+
+```commandline
+$ ./wezzer.py --address "Citi Field" --days 2 --hours 4
+
+2018-05-09 07:48 PM
+Weather forecast for Harbor Hills, NY
+
+4-Hour Forecast
+===============================================================================
+07:00PM-08:00PM   68F Mostly Clear, wind 8 mph S
+08:00PM-09:00PM - 66F Mostly Clear, wind 8 mph S
+09:00PM-10:00PM - 64F Mostly Clear, wind 7 mph S
+10:00PM-11:00PM - 61F Mostly Clear, wind 2 to 6 mph S
+
+2-Day Forecast
+===============================================================================
+Tonight 54F
+    Partly cloudy, with a low around 54. Southeast wind 0 to 8 mph.
+Thursday 71F
+    A slight chance of showers and thunderstorms after 2pm. Partly sunny. High
+    near 71, with temperatures falling to around 68 in the afternoon. South wind
+    1 to 13 mph. Chance of precipitation is 20%.
+Thursday Night 58F
+    A slight chance of showers and thunderstorms before 1am. Mostly cloudy, with
+    a low around 58. West wind 6 to 13 mph. Chance of precipitation is 20%.
+Friday 72F
+    Sunny. High near 72, with temperatures falling to around 70 in the
+    afternoon. West wind 7 to 10 mph.
 
 ```
-$ ./wezzer.py -z 07042
 
-Wezzer 0.1.1
-Weather for Glen Ridge, NJ (2018-05-06 01:16 PM)
+## Changelog
 
-12-Hour Forecast
-01:00 PM - 02:00 PM ▪ 61F Slight Chance Rain Showers, wind 7 mph NE
-02:00 PM - 03:00 PM ▲ 62F Rain Showers Likely, wind 7 mph NE
-03:00 PM - 04:00 PM ▲ 63F Rain Showers Likely, wind 7 mph NE
-04:00 PM - 05:00 PM ▼ 62F Rain Showers Likely, wind 7 mph NE
-05:00 PM - 06:00 PM ▼ 61F Rain Showers Likely, wind 7 mph NE
-06:00 PM - 07:00 PM ▼ 60F Rain Showers Likely, wind 7 mph NE
-07:00 PM - 08:00 PM ▪ 60F Chance Rain Showers, wind 6 mph NE
-08:00 PM - 09:00 PM ▼ 59F Chance Rain Showers, wind 5 mph NE
-09:00 PM - 10:00 PM ▪ 59F Chance Rain Showers, wind 5 mph NE
-10:00 PM - 11:00 PM ▼ 58F Chance Rain Showers, wind 3 mph NE
-11:00 PM - 12:00 AM ▪ 58F Chance Rain Showers, wind 2 mph NE
-12:00 AM - 01:00 AM ▼ 57F Chance Rain Showers, wind 2 mph NE
+**0.1** - very crude, did not support Windows or Python 3
 
-2-Day Extended Forecast
-This Afternoon: ▼ 63F
-    Rain showers likely. Cloudy. High near 63, with temperatures falling to
-    around 60 in the afternoon. Northeast wind around 7 mph. Chance of
-    precipitation is 60%. New rainfall amounts less than a tenth of an inch
-    possible.
-Tonight: ▪ 53F
-    Rain showers likely. Cloudy, with a low around 53. Northeast wind 2 to 7
-    mph. Chance of precipitation is 60%. New rainfall amounts between a tenth
-    and quarter of an inch possible.
-Monday: ▼ 67F
-    A slight chance of rain showers. Partly sunny. High near 67, with
-    temperatures falling to around 65 in the afternoon. Northeast wind 5 to 10
-    mph. Chance of precipitation is 20%.
-Monday Night: ▪ 49F
-    A slight chance of rain showers before 9pm. Partly cloudy, with a low around
-    49. East wind 3 to 9 mph. Chance of precipitation is 20%.
-```
+**0.2** - switched to Click for all CLI logic, adds support for Windows,
+ switched to maxminddb-geolite2 for Python 3 compatibility
 
 ## Roadmap
 
-You're looking at Wezzer 0.1. Future releases might look better or have more options. I'm toying with the idea of making a cross-platform GUI version called Gwezzer, but that's a bit further down the road. I'd also like to make it possible to create a ~/.wezzer_profile to store your default options in, like for example, if you always wanted to display wezzer with colors, or if you always wanted to override the IP lookup by specifying the ZIP Code for Beverly Hills 90210.
+**0.3** - produce pre-built binaries for Linux, Windows, macOS with setuptools
+
+**0.4** - allow wezzer to daemonize, display a web front end on a local port, using Flask
 
 ## Known Issues
 
-* Wezzer is incompatible with Python 3.
-* You can't paginate Wezzer with tools like `less` or `more` or `something in between`.
-* Wezzer uses Unicode to print up and down arrows. Wezzer wants to print Unicode suns and clouds but hasn't figured out how to do that yet.
-* Wezzer won't give you a backrub.
+See the **Issues** tab for known bugs, or to submit a feature request.
+
+## Acknowledgements
+
+wezzer heavily relies on the work of others much smarter and probably nicer than me, and makes use of the following projects
+
+* [click](https://github.com/pallets/click)
+* [geopy](https://github.com/geopy/geopy)
+* [ipgetter](https://github.com/phoemur/ipgetter)
+

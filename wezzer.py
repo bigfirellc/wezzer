@@ -7,22 +7,21 @@ github.com/nqnzp/wezzer
 """
 
 from __future__ import print_function
-
 import click
 import datetime
 from dateutil.parser import parse
-from geoip import geolite2
+from geolite2 import geolite2
 from geopy.geocoders import Nominatim
 import ipgetter
 import json
 import re
 import requests
 import sys
-from typing import Dict, Any
 import win_inet_pton
 
 
 def epdata_to_forecast(ep):
+
     forecast = dict()
     forecast["city"] = ep["properties"]["relativeLocation"]["properties"]["city"]
     forecast["state"] = ep["properties"]["relativeLocation"]["properties"]["state"]
@@ -30,7 +29,9 @@ def epdata_to_forecast(ep):
     forecast["hourly_url"] = ep["properties"]["forecastHourly"]
     forecast["extended"] = get_forecast_data(forecast["extended_url"])
     forecast["hourly"] = get_forecast_data(forecast["hourly_url"])
+
     return forecast
+
 
 def geocode_forecast(addr):
     geo = Nominatim()
@@ -39,7 +40,9 @@ def geocode_forecast(addr):
     ep = get_endpoint_data(latlong)
     return epdata_to_forecast(ep)
 
+
 def get_endpoint_data(geolocation):
+
     try:
         r = requests.get("https://api.weather.gov/points/%s" % geolocation)
         r.raise_for_status()
@@ -50,34 +53,39 @@ def get_endpoint_data(geolocation):
             click.echo("[*] Failed to get response from weather.gov API", err=True)
         sys.exit(1)
 
-    endpoint_data = json.loads(r.content)
-
-    return endpoint_data  # returns a json object
+    return json.loads(r.content)
 
 
 def get_forecast_data(forecast_url):
-    response = requests.get(forecast_url)
 
-    if response.status_code == 200:
-        forecast_data = json.loads(response.content)
-    else:
-        click.echo("[*] Failed to get response from API", err=True)
+    try:
+        r = requests.get(forecast_url)
+        r.raise_for_status()
+    except requests.exceptions.HTTPError as err:
+        if r.status_code == 404:
+            click.echo("[*] Invalid forecast URI provided.", err=True)
+        if r.status_code != 200:
+            click.echo("[*] Failed to get response from weather.gov API", err=True)
+        sys.exit(1)
 
-    return forecast_data  # returns a json object
+    return json.loads(r.content)
 
 
 def ipaddr_forecast():
-    ipaddr = str(ipgetter.myip())
-    click.echo("[+] Your IP address is %s" % ipaddr)
-    geoip = geolite2.lookup(ipaddr)
-    location = geoip.location
-    latlong = str(location[0]) + "," + str(location[1])
-    ep = get_endpoint_data(latlong)
-    return epdata_to_forecast(ep)  # type: Dict[str, Any]
 
-def print_extended_forecast(forecast, days, color, width):
+    ipaddr = str(ipgetter.myip())
+    reader = geolite2.reader()
+    loc = reader.get(ipaddr)
+    geolite2.close()
+
+    latlong = str(loc["location"]["latitude"]) + "," + str(loc["location"]["longitude"])
+    ep = get_endpoint_data(latlong)
+    return epdata_to_forecast(ep)
+
+
+def print_extended_forecast(forecast, days, width):
     
-    ef = click.style("\n\n" + str(days / 2) + "-Day Forecast", fg="cyan") + "\n"
+    ef = click.style("\n\n" + str(int(days / 2)) + "-Day Forecast", fg="cyan") + "\n"
     
     for i in range(1,width):
         ef += "="
@@ -87,12 +95,13 @@ def print_extended_forecast(forecast, days, color, width):
         if period["number"] > days:
             break
 
-        ef += "\n" + period["name"] + " " + str(period["temperature"]) + period["temperatureUnit"] 
-        ef += "\n" + click.wrap_text(period["detailedForecast"], initial_indent="    ", subsequent_indent="    ")
+        ef += "\n" + click.style(period["name"], fg="green") + " " + str(period["temperature"]) + period["temperatureUnit"]
+        ef += "\n" + click.wrap_text(period["detailedForecast"], width=width, initial_indent="    ", subsequent_indent="    ")
 
     return ef
-    
-def print_hourly_forecast(forecast, hours, color, width):
+
+
+def print_hourly_forecast(forecast, hours, width):
     
     hf = click.style("\n\n" + str(hours) + "-Hour Forecast", fg="cyan") + "\n"
     
@@ -120,7 +129,7 @@ def print_hourly_forecast(forecast, hours, color, width):
         start_time = parse(period["startTime"]).strftime("%I:%M%p")
         end_time = parse(period["endTime"]).strftime("%I:%M%p")
 
-        hf += "\n" + (start_time + "-" + end_time + " " + trend + " "
+        hf += "\n" + (click.style(start_time + "-" + end_time, fg="green") + " " + trend + " "
               + str(period["temperature"]) + period["temperatureUnit"] + " "
               + period["shortForecast"] + ", wind " + period["windSpeed"]
               + " " + period["windDirection"])
@@ -129,15 +138,28 @@ def print_hourly_forecast(forecast, hours, color, width):
     
 
 def validate_days(ctx, param, value):
+
     if value < 0:
-        raise click.BadParameter('Days should be a positive integer.')
+        raise click.BadParameter('days should be a positive number, and an integer.')
     value = value * 2
+
     return value
 
+
+def validate_width(ctx, param, value):
+
+    if value < 1:
+        raise click.BadParameter('width should be a positive number, and an integer.')
+
+    return value
+
+
 def validate_zip(ctx, param, value):
+
     zipCode = re.compile(r"(\s*)?(\d){5}(\s*)?")
     if not (zipCode.match(value) or value == ""):
         raise click.BadParameter('Invalid zip code format.')
+
     return value
 
 
@@ -146,23 +168,22 @@ def validate_zip(ctx, param, value):
 """
 
 @click.command()
-@click.option('--address', help="Address for the forecast", type=str)
+@click.option('--address', help="Address or place for the forecast. Use quotes, eg. \"Bull Shoals, AR\". "
+                                "Notable place names work too, like \"Griffith Park\" or \"Barton Springs Pool\"", type=str)
 @click.option('--color/--no-color', default=True, help="Enable ANSI color")
-@click.option('--days', default=3, callback=validate_days, help="Number of days for the extended forecast", type=int)
-@click.option('--hours', default=6, help="Number of hours for the hourly forecast", type=int)
-@click.option('--width', default=80, help="Display width", type=int)
+@click.option('--days', default=3, callback=validate_days, help="# of days in the extended forecast, default is 3", type=int)
+@click.option('--hours', default=6, help="# of hours in the hourly forecast, default is 6", type=int)
+@click.option('--version', help="Show version information", is_flag=True, default=False)
+@click.option('--width', default=80, callback=validate_width, help="Display width by # of columns, default is 80", type=int)
 @click.option('--zip', default="", callback=validate_zip, help='ZIP code for the forecast', type=str)
-def cli(address, color, days, hours, width, zip):
+def cli(address, color, days, hours, version, width, zip):
 
-    click.clear()
+    versioninfo = click.style("wezzer 0.2.0\nhttps://github.com/nqnzp/wezzer\nIt's wezzer, for weather.", fg="magenta")
+    nowtime = click.style(datetime.datetime.now().strftime("%Y-%m-%d %I:%M %p"), fg="cyan")
 
-    if color:
-        version = click.style("Wezzer 0.2.0", fg="yellow")
-        nowtime = click.style(datetime.datetime.now().strftime("%Y-%m-%d %I:%M %p"), fg="yellow")
-    else:
-        version = "\nWezzer 0.2.0"
-        nowtime = datetime.datetime.now().strftime("%Y-%m-%d %I:%M %p")
-
+    if (version):
+        click.echo(versioninfo, color=color)
+        sys.exit(1)
 
     if (zip):
         forecast = geocode_forecast(zip)
@@ -171,18 +192,17 @@ def cli(address, color, days, hours, width, zip):
     else:
         forecast = ipaddr_forecast()
 
-    header = "\nWeather for %s, %s" % (forecast["city"], forecast["state"])
-    output = version + "\n" + nowtime + header
+    header = click.style("\nWeather forecast for %s, %s"
+                         % (forecast["city"], forecast["state"]), fg="green")
+
+    output = "\n" + nowtime + header
     
     if hours > 0:
-        output += print_hourly_forecast(forecast, hours, color, width)
+        output += print_hourly_forecast(forecast, hours, width)
     if days > 0:
-        output += print_extended_forecast(forecast, days, color, width)
+        output += print_extended_forecast(forecast, days, width)
 
-    if color:
-        click.echo(output + "\n")
-    else:
-        click.echo(output + "\n", color=False)
+    click.echo(output + "\n", color=color)
 
 if __name__ == "__main__":
     cli()
