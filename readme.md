@@ -50,11 +50,11 @@ easy_install virtualenv
 For macOS, install [Homebrew](https://brew.sh/), then install python and virtualenv with `brew`:
 
 ```commandline
-brew install python@2
+brew install python
 brew install pyenv-virtualenv
 ```
 
-Change directories into the `wezzer` dir, create a new virtualenv, for instance, and then activate it. 
+Change directories into the `wezzer` dir, create a new virtualenv and then activate it. 
 On Linux and macOS:
 
 ```commandline
@@ -64,6 +64,7 @@ virtualenv venv
 ```
 
 On Windows:
+
 ```commandline
 cd wezzer
 virtualenv venv
@@ -74,7 +75,6 @@ venv/Scripts/activate
 Use `pip` and the `requirements.txt` file to install dependencies:
 
 ```commandLine
-cd ~/GitHub/wezzer/
 pip install -r requirements.txt
 ```
 
@@ -92,7 +92,7 @@ wezzer is easy to run once you've got it installed:
 ./wezzer.py
 ```
 
-By default, wezzer will geolocate your computer by looking up your IP address, using [ipgetter](https://github.com/phoemur/ipgetter). It then looks up your latitude and longitude based on that IP, using [python-geoip](https://pythonhosted.org/python-geoip/), and uses those coordinates to query the NOAA's API for your local weather. Run without any options, wezzer will display 6 hours of hourly forecasts, and 3 days worth of extended forecasts. 
+By default, wezzer will locate your computer by looking up your IP address. It coverts the address to latitude and longitude, and uses those coordinates to query the NOAA's API for a weather endpoint. Finally, it queries that endpoint for your local weather forecast. Run without any options, wezzer will display 6 hours of hourly forecasts, and 3 days worth of extended forecasts. 
 
 ### Commandline Options
 wezzer can be run with a handful of commandline options to adjust your experience. Use `--help` for a full list of options.
