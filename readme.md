@@ -109,7 +109,6 @@ Options:
   --width INTEGER       Display width by # of columns, default is 80
   --zip TEXT            ZIP code for the forecast
   --help                Show this message and exit.
-(venv) adamcopeland@prometheus:~/Documents/GitHub/wezzer$ 
 ```
 
 ### Sample Output
