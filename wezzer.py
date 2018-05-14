@@ -8,17 +8,18 @@ github.com/nqnzp/wezzer
 
 from __future__ import print_function
 import click
+import configparser
 import datetime
 from dateutil.parser import parse
 from geolite2 import geolite2
 from geopy.geocoders import Nominatim
 import ipgetter
 import json
+import os.path
 import re
 import requests
 import sys
 import win_inet_pton
-
 
 def epdata_to_forecast(ep):
 
@@ -81,6 +82,18 @@ def ipaddr_forecast():
     latlong = str(loc["location"]["latitude"]) + "," + str(loc["location"]["longitude"])
     ep = get_endpoint_data(latlong)
     return epdata_to_forecast(ep)
+
+def load_rc_file(config):
+
+    options = dict()
+
+    file_name = homedir + "/.wezzerrc"
+    try:
+        config.read_file(open(file_name, 'r'))
+    except IOError as e:
+        click.echo(e)
+
+    return options
 
 
 def print_extended_forecast(forecast, days, width):
@@ -178,12 +191,32 @@ def validate_zip(ctx, param, value):
 @click.option('--zip', default="", callback=validate_zip, help='ZIP code for the forecast', type=str)
 def cli(address, color, days, hours, version, width, zip):
 
-    versioninfo = click.style("wezzer 0.2.0\nhttps://github.com/nqnzp/wezzer\nIt's wezzer, for weather.", fg="magenta")
-    nowtime = click.style(datetime.datetime.now().strftime("%Y-%m-%d %I:%M %p"), fg="cyan")
+    versioninfo = click.style("wezzer 0.2.0\nhttps://github.com/nqnzp/wezzer\nIt's wezzer, for weather.", fg="green")
 
     if (version):
         click.echo(versioninfo, color=color)
         sys.exit(1)
+
+    # Get things from the user's .wezzer file if they exist
+    config = configparser.ConfigParser()
+    try:
+        config.read(os.path.expanduser('~/.wezzer'))
+    except configparser.MissingSectionHeaderError as e:
+        click.echo("Invalid .wezzer file: Missing [wezzer] header.")
+        sys.exit(1)
+
+    try: address = str(config["wezzer"]["address"])
+    except (KeyError) as e: pass
+    try: color = bool(config["wezzer"]["color"])
+    except (KeyError) as e: pass
+    try: days = int(config["wezzer"]["days"]) * 2
+    except (KeyError) as e: pass
+    try: hours = int(config["wezzer"]["hours"])
+    except (KeyError) as e: pass
+    try: width = int(config["wezzer"]["width"])
+    except (KeyError) as e: pass
+    try: days = str(config["wezzer"]["zip"])
+    except (KeyError) as e: pass
 
     if (zip):
         forecast = geocode_forecast(zip)
@@ -192,11 +225,13 @@ def cli(address, color, days, hours, version, width, zip):
     else:
         forecast = ipaddr_forecast()
 
+    nowtime = click.style(datetime.datetime.now().strftime("%Y-%m-%d %I:%M %p"), fg="cyan")
+
     header = click.style("\nWeather forecast for %s, %s"
                          % (forecast["city"], forecast["state"]), fg="green")
 
     output = "\n" + nowtime + header
-    
+
     if hours > 0:
         output += print_hourly_forecast(forecast, hours, width)
     if days > 0:

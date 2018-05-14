@@ -13,7 +13,7 @@ setup(
         'ipgetter',
         'python-dateutil',
         'python-geoip',
-        'python-geoip-geolite2',
+        'maxminddb-geolite2',
         'requests',
         'typing',
         'win-inet-pton'
