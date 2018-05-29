@@ -9,6 +9,7 @@ setup(
     install_requires=[
         'Click',
         'colorama',
+        'configparser',
         'geopy',
         'ipgetter',
         'python-dateutil',
