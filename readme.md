@@ -107,7 +107,9 @@ Friday 72F
 
 **0.3** - produce pre-built binaries for Linux, Windows, macOS with setuptools
 
-**0.4** - allow wezzer to daemonize, display a web front end on a local port, using Flask
+**0.4** - Dockerfile to run wezzer in Docker!
+
+**0.5** - allow wezzer to daemonize, display a web front end on a local port, using Flask
 
 ## Known Issues
 
