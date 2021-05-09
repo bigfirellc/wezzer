@@ -121,5 +121,5 @@ wezzer heavily relies on the work of others much smarter and probably nicer than
 
 * [click](https://github.com/pallets/click)
 * [geopy](https://github.com/geopy/geopy)
-* [ipgetter](https://github.com/phoemur/ipgetter)
+* [ipgetter2](https://github.com/starofrainnight/ipgetter2)
 
