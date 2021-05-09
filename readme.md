@@ -6,15 +6,9 @@
 
 wezzer is a simple Python command line interface that pulls local weather information based on your geolocation, zip code, or address and prints it to your console with some decent formatting. 
 
-It was born out of my frustration with most weather websites being full of ads and  garbage.
-
 For its forecast source, wezzer uses NOAA's excellent [weather.gov API](https://www.weather.gov/documentation/services-web-api).
 
-wezzer is compatible with Python 2.7 and Python 3.6
-
-wezzer has been tested to run nicely on Ubuntu, Windows, and macOS.
-
-It's wezzer, for weather.
+wezzer is compatible with Python 2.7 and Python 3.x, and has been tested to run nicely on Ubuntu, Windows, and macOS. It's wezzer, for weather.
 
 
 ## Installation
@@ -44,9 +38,7 @@ chmod u+x ./wezzer.py
 wezzer is easy to run once you've got it installed:
 
 ```commandline
-
 ./wezzer.py
-
 ```
 
 By default, wezzer will locate your computer by looking up your IP address. It coverts the address to latitude and longitude, and uses those coordinates to query the NOAA's API for a weather endpoint. Finally, it queries that endpoint for your local weather forecast. Run without any options, wezzer will display 6 hours of hourly forecasts, and 3 days worth of extended forecasts. 
