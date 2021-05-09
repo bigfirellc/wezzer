@@ -26,13 +26,8 @@ somewhere memorable in your home directory, like a GitHub directory:
 mkdir ~/GitHub/
 cd ~/GitHub/
 git clone https://github.com/nqnzp/wezzer.git
-
-```
-On Linux and macOS:
-
-```commandline
 cd wezzer
-virtualenv venv
+python -m virtualenv venv
 . venv/bin/activate
 ```
 
@@ -41,11 +36,6 @@ Use `pip` and the `requirements.txt` file to install dependencies:
 
 ```commandLine
 pip install -r requirements.txt
-```
-
-Depending upon your environment, you may need to make wezzer.py executable before you run it.
-
-```commandline
 chmod u+x ./wezzer.py
 ```
 
@@ -54,15 +44,18 @@ chmod u+x ./wezzer.py
 wezzer is easy to run once you've got it installed:
 
 ```commandline
+
 ./wezzer.py
+
 ```
 
 By default, wezzer will locate your computer by looking up your IP address. It coverts the address to latitude and longitude, and uses those coordinates to query the NOAA's API for a weather endpoint. Finally, it queries that endpoint for your local weather forecast. Run without any options, wezzer will display 6 hours of hourly forecasts, and 3 days worth of extended forecasts. 
 
-### Commandline Options
-wezzer can be run with a handful of commandline options to adjust your experience. Use `--help` for a full list of options.
+### Options
 
- ```commandline
+wezzer can be run with a handful of commandline options to adjust your experience. 
+
+```commandline
  ./wezzer.py --help
 Usage: wezzer.py [OPTIONS]
 
