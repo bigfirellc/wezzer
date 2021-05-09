@@ -4,10 +4,9 @@
 
 ## Synopsis
 
-wezzer is a simple Python command line interface that pulls local weather information based on your geolocation,
-zip code, or address and prints it to your console with some decent formatting. 
+wezzer is a simple Python command line interface that pulls local weather information based on your geolocation, zip code, or address and prints it to your console with some decent formatting. 
 
-It was born out of my frustration with most weather websites being full of ads, and generally garbage to look at. 
+It was born out of my frustration with most weather websites being full of ads and  garbage.
 
 For its forecast source, wezzer uses NOAA's excellent [weather.gov API](https://www.weather.gov/documentation/services-web-api).
 
@@ -27,48 +26,14 @@ somewhere memorable in your home directory, like a GitHub directory:
 mkdir ~/GitHub/
 cd ~/GitHub/
 git clone https://github.com/nqnzp/wezzer.git
+
 ```
-
-### virtualenv
-
-It's recommended that you run wezzer in a virtualenv, so make sure that you have a copy of virtualenv for your environment.
-
-For example, on Ubuntu, just install it from apt:
-
-```commandline
-sudo apt install python-virtualenv
-```
-
-On Windows, it's helpful to use [Chocolatey](https://chocolatey.org) to set up your Python environment.
-Install Chocolatey, then use it to install python and then use python to install virtualenv
-
-```commandline
-choco install python
-easy_install virtualenv
-```
-
-For macOS, install [Homebrew](https://brew.sh/), then install python and virtualenv with `brew`:
-
-```commandline
-brew install python
-brew install pyenv-virtualenv
-```
-
-Change directories into the `wezzer` dir, create a new virtualenv and then activate it. 
 On Linux and macOS:
 
 ```commandline
 cd wezzer
 virtualenv venv
 . venv/bin/activate
-```
-
-On Windows:
-
-```commandline
-cd wezzer
-virtualenv venv
-venv/Scripts/activate
 ```
 
 ### Dependencies

@@ -3,7 +3,7 @@
 """
 wezzer.py
 it's wezzer, for weather
-github.com/nqnzp/wezzer
+github.com/lesservehicle/wezzer
 """
 
 from __future__ import print_function
@@ -13,13 +13,14 @@ import datetime
 from dateutil.parser import parse
 from geolite2 import geolite2
 from geopy.geocoders import Nominatim
-import ipgetter
+from ipgetter2 import ipgetter1 as ipgetter
 import json
 import os.path
 import re
 import requests
 import sys
 import win_inet_pton
+
 
 def epdata_to_forecast(ep):
 
@@ -35,6 +36,7 @@ def epdata_to_forecast(ep):
 
 
 def geocode_forecast(addr):
+
     geo = Nominatim()
     loc = geo.geocode(addr)
     latlong = str(loc.latitude) + "," + str(loc.longitude)
@@ -47,6 +49,7 @@ def get_endpoint_data(geolocation):
     try:
         r = requests.get("https://api.weather.gov/points/%s" % geolocation)
         r.raise_for_status()
+
     except requests.exceptions.HTTPError as err:
         if r.status_code == 404:
             click.echo("[*] Invalid address, city, or zip code provided.", err=True)
@@ -62,6 +65,7 @@ def get_forecast_data(forecast_url):
     try:
         r = requests.get(forecast_url)
         r.raise_for_status()
+
     except requests.exceptions.HTTPError as err:
         if r.status_code == 404:
             click.echo("[*] Invalid forecast URI provided.", err=True)
@@ -97,10 +101,10 @@ def load_rc_file(config):
 
 
 def print_extended_forecast(forecast, days, width):
-    
+
     ef = click.style("\n\n" + str(int(days / 2)) + "-Day Forecast", fg="cyan") + "\n"
-    
-    for i in range(1,width):
+
+    for i in range(1, width):
         ef += "="
 
     for period in forecast["extended"]["properties"]["periods"]:
@@ -115,9 +119,9 @@ def print_extended_forecast(forecast, days, width):
 
 
 def print_hourly_forecast(forecast, hours, width):
-    
+
     hf = click.style("\n\n" + str(hours) + "-Hour Forecast", fg="cyan") + "\n"
-    
+
     for i in range(1,width):
         hf += "="
 

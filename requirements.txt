@@ -1,7 +1,7 @@
 click
 colorama
 geopy
-ipgetter
+ipgetter2
 python-dateutil
 maxminddb-geolite2
 requests
